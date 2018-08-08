@@ -1,5 +1,7 @@
 # mosaik
 
+Rearranges images for a glitchy effect
+
 ## Project setup
 ```
 yarn install
