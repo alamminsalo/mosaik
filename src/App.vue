@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <h3>Mosaik</h3>
     <canvas-wrapper>
     </canvas-wrapper>
   </div>
