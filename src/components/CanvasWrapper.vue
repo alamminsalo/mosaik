@@ -1,10 +1,9 @@
 <template>
   <div class="canvas-wrapper">
+    <div ref="tools" class="tools">
+      <!-- title -->
+      <b>Mosaik</b>
 
-    <!-- drawing canvas -->
-    <canvas ref="canv"></canvas>
-
-    <div class="tools">
       <!-- image chooser -->
       <img-chooser @input="setImg"></img-chooser>
 
@@ -23,9 +22,11 @@
 	<option value="1">Vertical only</option>
 	<option value="2">Horizontal only</option>
       </select>
-
-      <br>
     </div>
+
+    <!-- drawing canvas -->
+    <canvas v-bind:class="{ shown: img != null, sx: w >= h, sy: h >= w }" ref="canv"></canvas>
+
   </div>
 </template>
 
@@ -54,13 +55,34 @@ export default {
 
     // clears canvas
     clear(){
+      let tools = this.$refs['tools']
+      let canv = this.$refs['canv'] 
+
       this.w = this.img.width
       this.h = this.img.height
-      this.$refs['canv'].width = this.w
-      this.$refs['canv'].height = this.h
+
+      canv.width = this.w
+      canv.height = this.h
+
       this.iterations = 0
       this.axis = 0
       this.reset()
+
+      // this.scale()
+    },
+
+    scale() {
+      let ctx = this.provider.context
+      const ratio = this.w / this.h
+      if (ratio > 1) {
+	console.log("scaling horizontally..")
+	//scale horizontally
+	let amt = Math.min(1, screen.width / this.w)
+	ctx.scale(amt,amt)
+      }
+      else {
+	//scale vertically
+      }
     },
 
     // slices canvas by height and stacks every even, odd
@@ -154,3 +176,27 @@ export default {
   }
 }
 </script>
+<style>
+.tools{
+  position:fixed;
+  width: 100%;
+  z-index:999;
+  background: whitesmoke;
+  opacity: 0.4;
+}
+.tools:hover{
+  opacity: 0.9;
+}
+canvas {
+  display: none;
+}
+canvas.shown { 
+  display: block;
+}
+canvas.sx {
+  width: 98vw;
+}
+canvas.sy {
+  height: 98vh;
+}
+</style>
