@@ -2,26 +2,30 @@
   <div class="canvas-wrapper">
     <div ref="tools" class="tools">
       <!-- title -->
-      <b>Mosaik</b>
+      <code>Mosaik</code>
 
       <!-- image chooser -->
-      <img-chooser @input="setImg"></img-chooser>
+      <img-chooser class="tool" @input="setImg"></img-chooser>
 
       <!-- iteration count -->
-      <select id="iter" v-model="iterations" @change="makemosaik" v-if="img != null">
-	<option>0</option>
-	<option>1</option>
-	<option>2</option>
-	<option>3</option>
-	<option>4</option>
-	<option>5</option>
-      </select>
+      <span class="tool">
+	<select id="iter" v-model="iterations" @change="makemosaik" v-if="img != null">
+	  <option>0</option>
+	  <option>1</option>
+	  <option>2</option>
+	  <option>3</option>
+	  <option>4</option>
+	  <option>5</option>
+	</select>
+      </span>
 
-      <select id="axises" v-model="axis" @change="makemosaik" v-if="img != null">
-	<option value="0">Vertical & Horizontal</option>
-	<option value="1">Vertical only</option>
-	<option value="2">Horizontal only</option>
-      </select>
+      <span class="tool">
+	<select id="axises" v-model="axis" @change="makemosaik" v-if="img != null">
+	  <option value="0">Vertical & Horizontal</option>
+	  <option value="1">Vertical only</option>
+	  <option value="2">Horizontal only</option>
+	</select>
+      </span>
     </div>
 
     <!-- drawing canvas -->
@@ -178,14 +182,10 @@ export default {
 </script>
 <style>
 .tools{
-  position:fixed;
-  width: 100%;
-  z-index:999;
-  background: whitesmoke;
-  opacity: 0.4;
+  height: 3vh;
 }
-.tools:hover{
-  opacity: 0.9;
+.tool {
+  padding-left: 8px;
 }
 canvas {
   display: none;
@@ -194,9 +194,9 @@ canvas.shown {
   display: block;
 }
 canvas.sx {
-  width: 98vw;
+  width: 95vw;
 }
 canvas.sy {
-  height: 98vh;
+  height: 95vh;
 }
 </style>

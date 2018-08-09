@@ -1,7 +1,7 @@
 <template>
-  <div class="imgchooser-wrapper">
+  <span class="imgchooser-wrapper">
     <input type="file" @change="handlefile">
-  </div>
+  </span>
 </template>
 
 <script>
