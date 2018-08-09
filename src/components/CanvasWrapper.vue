@@ -64,10 +64,10 @@ export default {
     },
 
     // slices canvas by height and stacks every even, odd
-    partitionVertical(data, h, w){
+    partition(data, chunksize){
       return _(data)
       // in chunks of rgba
-      .chunk(4 * w * h)
+      .chunk(4 * chunksize)
 
       // get index
       .map((v,i) => [v,i])
@@ -92,18 +92,7 @@ export default {
       return _(data)
       // in chunks of row
       .chunk(w * 4)
-      .map((row) => {
-	return _(row)
-	// in chunks of row part width
-	.chunk(w0 * 4)
-	// partition by even,odd
-	.map((v,i) => [v,i])
-	.partition((a) => a[1] % 2 === 0)
-	.flatten()
-	.map((a) => a[0])
-	.flatten()
-	.value()
-      })
+      .map((row) => this.partition(row,w0))
       .flatten()
       .value()
     },
@@ -121,7 +110,7 @@ export default {
 
 	// process data
 	if ([0,1].includes(_.toNumber(this.axis)))
-	  data = this.partitionVertical(data, Math.floor(this.h / (this.iterations + 1)), this.w)
+	  data = this.partition(data, Math.floor(this.h / (this.iterations + 1)) * this.w)
 	if ([0,2].includes(_.toNumber(this.axis)))
 	  data = this.partitionHorizontal(data, Math.floor(this.w / (this.iterations + 1)), this.w)
       }
